@@ -1,0 +1,29 @@
+.board-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.box {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #6b6b6b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-right: 5px;
+}
