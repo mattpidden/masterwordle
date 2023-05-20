@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/masterwordle/static/css/main.2bf359e4.css",
+    "main.js": "/masterwordle/static/js/main.75d8c0b6.js",
+    "static/js/787.498e1ff8.chunk.js": "/masterwordle/static/js/787.498e1ff8.chunk.js",
+    "index.html": "/masterwordle/index.html",
+    "main.2bf359e4.css.map": "/masterwordle/static/css/main.2bf359e4.css.map",
+    "main.75d8c0b6.js.map": "/masterwordle/static/js/main.75d8c0b6.js.map",
+    "787.498e1ff8.chunk.js.map": "/masterwordle/static/js/787.498e1ff8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2bf359e4.css",
+    "static/js/main.75d8c0b6.js"
+  ]
+}
