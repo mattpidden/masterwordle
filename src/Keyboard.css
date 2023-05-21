@@ -10,8 +10,15 @@
   font-weight: bold;
   text-transform: uppercase;
   padding: 10px;
-  margin: 5px;
-  width: 50px;
+  margin: 2px;
+  width: 30px;
+  background-color: #ccc; /* Grey background */
+  border: 1px solid #000; /* Thin black border */
+  border-radius: 4px; /* Slightly rounded corners */
+  color: #000; /* Black text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .keyboard .keyboard-bottom-row button[data-key="enter"],

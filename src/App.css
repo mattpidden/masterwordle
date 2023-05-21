@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Add this line */
 
   padding: 10px;
   height: 100vh;
