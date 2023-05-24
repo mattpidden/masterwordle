@@ -12,7 +12,7 @@
   padding: 10px;
   margin: 2px;
   width: 30px;
-  background-color: #ccc; /* Grey background */
+  background-color: #e4e4e4; /* Grey background */
   border: 1px solid #000; /* Thin black border */
   border-radius: 4px; /* Slightly rounded corners */
   color: #000; /* Black text */
@@ -21,8 +21,8 @@
   align-items: center;
 }
 
-.keyboard .keyboard-bottom-row button[data-key="enter"],
-.keyboard .keyboard-bottom-row button[data-key="delete"] {
+.keyboard button[data-key="enter"],
+.keyboard button[data-key="delete"] {
   font-size: 12px;
   width: 80px;
   display: flex;
