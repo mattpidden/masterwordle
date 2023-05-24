@@ -13,6 +13,9 @@ import ErrorPopup from './ErrorPopup.js';
 function App() {
 
   var currentBox = 'n/a';
+  var message = '';
+  var greenresults = [];
+  var yellowresults = [];
   var keyboardActive = true;
   window.addEventListener('keydown', handleKeyPress());
 
@@ -84,10 +87,12 @@ function App() {
             if (result == true) {
               //Row is full and contains real word so update row color
               updateBoxRowColor(row);
+              updateKeyboardColor(row);
               //Check if it is correct answer
               if (checkAnswer() == true) {
                 console.log('CORRECT');
                 //Show winning message
+                message = shareMessage();
                 showOverlay();
               } else {
                 //Not correct word so move onto next row
@@ -136,6 +141,16 @@ function App() {
     });
   }
 
+  function updateKeyboardColor(rowNumber) {
+    const boxes = document.querySelectorAll('.box');  
+    boxes.forEach((box) => {
+      var [row, column] = box.id.split('-').slice(1).map(Number); // Extract row and column numbers from the box ID
+      if (row == rowNumber) {
+        document.querySelector(`.keyboard button[data-key="${box.textContent}"]`).style.backgroundColor = 'rgb(200, 200, 200)';
+      }
+    });
+  }
+
   function evaluateGuess(rowNumber, guess, todaysWord) {
     var samePositionCount = 0;
     var mutualNotSamePositionCount = 0;
@@ -167,6 +182,8 @@ function App() {
   }
 
   function updateReviewCircles(rowNumber, mutualNotSamePositionCount, samePositionCount) {
+    greenresults.push(samePositionCount);
+    yellowresults.push(mutualNotSamePositionCount);
     const reviewCirclesClassName = `.reviewCircles${rowNumber}`
     const topRowElements = document.querySelectorAll(reviewCirclesClassName + ' .topRow');
     const bottomRowElements = document.querySelectorAll(reviewCirclesClassName + ' .bottomRow');
@@ -242,6 +259,28 @@ function App() {
     }, 1000);
   }
 
+  function shareMessage() {
+    const currentDate = new Date().toLocaleDateString('en-US', { timeZone: 'Europe/London' });
+    const words = data.words;
+    const wordObj = words.find(obj => obj.date === currentDate);
+    if (wordObj == null) {
+      return 'error'
+    }
+    const specificDateObj = new Date('5/24/2023');
+    const currentDateObj = new Date();
+    const timeDifference = currentDateObj - specificDateObj;
+    const daysPassed = Math.floor(timeDifference / (24 * 60 * 60 * 1000)) + 1;
+
+    var [row, column] = currentBox.split('-').slice(1).map(Number);
+    var messageTitle = `MasterWordle\n Day ${daysPassed} ${row}/6\n`;
+    var finalMessage = messageTitle;
+    for (var i = 0; i < row; i++) {
+      finalMessage = finalMessage + `\n ${greenresults[i]}🟢 ${yellowresults[i]}🟡`
+    }
+    console.log(finalMessage);
+    return ;
+  }
+
 
   return (
     <div>
@@ -249,7 +288,7 @@ function App() {
         <Header />
       </div>
       <div className="app-module" role="group">
-        <WinnerPopup hideOverlay={hideOverlay} message={'MasterWordle'}/>
+        <WinnerPopup hideOverlay={hideOverlay} message={ message }/>
         <ErrorPopup />
         <Board currentBox={currentBox} />
         <Keyboard handleKeyPress={handleKeyPress} />
