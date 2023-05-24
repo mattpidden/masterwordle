@@ -25,9 +25,10 @@ function Keyboard({ handleKeyPress }) {
         <button type="button" data-key="j" className="keyboard-middle-row-elements" onClick={() => handleKeyPress('j')}>j</button>
         <button type="button" data-key="k" className="keyboard-middle-row-elements" onClick={() => handleKeyPress('k')}>k</button>
         <button type="button" data-key="l" className="keyboard-middle-row-elements" onClick={() => handleKeyPress('l')}>l</button>
+        <button type="button" data-key="delete" className="keyboard-middle-row-elements" onClick={() => handleKeyPress('delete')}>delete</button>
+
       </div>
       <div className="keyboard-bottom-row">
-        <button type="button" data-key="enter" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('enter')}>enter</button>
         <button type="button" data-key="z" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('z')}>z</button>
         <button type="button" data-key="x" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('x')}>x</button>
         <button type="button" data-key="c" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('c')}>c</button>
@@ -35,7 +36,7 @@ function Keyboard({ handleKeyPress }) {
         <button type="button" data-key="b" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('b')}>b</button>
         <button type="button" data-key="n" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('n')}>n</button>
         <button type="button" data-key="m" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('m')}>m</button>
-        <button type="button" data-key="delete" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('delete')}>delete</button>
+        <button type="button" data-key="enter" className="keyboard-bottom-row-elements" onClick={() => handleKeyPress('enter')}>enter</button>
       </div>
     </div>
   );

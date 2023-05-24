@@ -1,0 +1,26 @@
+#erroroverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#errorpopup {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222222;
+  padding-inline: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+
+p {
+  color: rgb(236, 236, 236);
+}
