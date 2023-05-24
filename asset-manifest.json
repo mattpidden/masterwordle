@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/masterwordle/static/css/main.4a60427e.css",
+    "main.css": "/masterwordle/static/css/main.a92123da.css",
     "main.js": "/masterwordle/static/js/main.7c824df2.js",
     "static/js/787.498e1ff8.chunk.js": "/masterwordle/static/js/787.498e1ff8.chunk.js",
     "static/media/allwords.txt": "/masterwordle/static/media/allwords.e0ccc394dc53dab74cd8.txt",
     "index.html": "/masterwordle/index.html",
-    "main.4a60427e.css.map": "/masterwordle/static/css/main.4a60427e.css.map",
+    "main.a92123da.css.map": "/masterwordle/static/css/main.a92123da.css.map",
     "main.7c824df2.js.map": "/masterwordle/static/js/main.7c824df2.js.map",
     "787.498e1ff8.chunk.js.map": "/masterwordle/static/js/787.498e1ff8.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4a60427e.css",
+    "static/css/main.a92123da.css",
     "static/js/main.7c824df2.js"
   ]
 }
