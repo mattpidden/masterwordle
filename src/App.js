@@ -13,7 +13,7 @@ import ErrorPopup from './ErrorPopup.js';
 function App() {
 
   var currentBox = 'n/a';
-  var message = '';
+  var message = 'default';
   var greenresults = [];
   var yellowresults = [];
   var keyboardActive = true;
@@ -92,7 +92,6 @@ function App() {
               if (checkAnswer() == true) {
                 console.log('CORRECT');
                 //Show winning message
-                message = shareMessage();
                 showOverlay();
               } else {
                 //Not correct word so move onto next row
@@ -232,6 +231,8 @@ function App() {
           }
         });
       }
+    } else {
+      showOverlay();
     }
   }
 
@@ -272,13 +273,13 @@ function App() {
     const daysPassed = Math.floor(timeDifference / (24 * 60 * 60 * 1000)) + 1;
 
     var [row, column] = currentBox.split('-').slice(1).map(Number);
-    var messageTitle = `MasterWordle\n Day ${daysPassed} ${row}/6\n`;
+    var messageTitle = `MasterWordle\nDay ${daysPassed}, ${row}/6\n`;
     var finalMessage = messageTitle;
     for (var i = 0; i < row; i++) {
       finalMessage = finalMessage + `\n ${greenresults[i]}🟢 ${yellowresults[i]}🟡`
     }
-    console.log(finalMessage);
-    return ;
+    message = finalMessage;
+    return finalMessage;
   }
 
 
@@ -288,7 +289,7 @@ function App() {
         <Header />
       </div>
       <div className="app-module" role="group">
-        <WinnerPopup hideOverlay={hideOverlay} message={ message }/>
+        <WinnerPopup hideOverlay={hideOverlay} getMessage={shareMessage} />
         <ErrorPopup />
         <Board currentBox={currentBox} />
         <Keyboard handleKeyPress={handleKeyPress} />

@@ -1,13 +1,13 @@
 import React from 'react';
 import './WinnerPopup.css'
 
-function WinnerPopup({ hideOverlay, message }) {
+function WinnerPopup({ hideOverlay, getMessage }) {
 
   const handleShare = async () => {
     try {
       if (navigator.share) {
         await navigator.share({
-          text: message
+          text: getMessage()
         });
       } else {
         console.log('Web Share API not supported.');
