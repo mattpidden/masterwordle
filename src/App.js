@@ -8,6 +8,7 @@ import data from './words.json';
 import { updateTopRow, updateBottomRow } from './ReviewCircles.js'
 import allWords from './allwords.txt';
 import ErrorPopup from './ErrorPopup.js';
+import WelcomePopup from './tutorialPopup.js';
 
 
 function App() {
@@ -17,6 +18,8 @@ function App() {
   var greenresults = [];
   var yellowresults = [];
   var keyboardActive = true;
+  var noRows = 8;
+  var won = false;
   window.addEventListener('keydown', handleKeyPress());
 
   window.onload = function() {
@@ -56,9 +59,10 @@ function App() {
     var [row, column] = box.split('-').slice(1).map(Number); // Extract row and column numbers from the box ID
     var nextColumn = 0;
     var nextRow = row + 1;
-    if (nextRow > 6) {
+    if (nextRow > noRows) {
       console.log("End of game");
-      nextRow = 6;
+      nextRow = noRows;
+      showOverlay("#overlay");
     }
     return `box-${nextRow}-${nextColumn}`; // Return the ID of the next box
   }
@@ -90,12 +94,12 @@ function App() {
               updateKeyboardColor(row);
               //Check if it is correct answer
               if (checkAnswer() == true) {
+                won = true;
                 console.log('CORRECT');
                 //Show winning message
-                showOverlay();
-              } else {
-                //Not correct word so move onto next row
-                currentBox = nextRow(currentBox);
+                showOverlay('#overlay');
+              } else { //Not correct word guess, progress to next row
+                  currentBox = nextRow(currentBox);
               }
             } else {
               flashErrorOverlay();
@@ -178,6 +182,7 @@ function App() {
     }
 
     updateReviewCircles(rowNumber, mutualNotSamePositionCount, samePositionCount);
+    
   }
 
   function updateReviewCircles(rowNumber, mutualNotSamePositionCount, samePositionCount) {
@@ -231,13 +236,16 @@ function App() {
           }
         });
       }
-    } else {
-      showOverlay();
-    }
+    } 
   }
 
-  function showOverlay() {
-    const overlay = document.querySelector('#overlay');
+  function showOverlay(overlayName) {
+    const overlay = document.querySelector(overlayName);
+    if (overlayName == '#overlay') {
+      overlay.querySelector('.title').textContent = shareTitle();
+      overlay.querySelector('.subtitle').textContent = shareSubtitle();
+    }
+
     if (overlay != null) {
       overlay.style.display = 'flex';
     }
@@ -250,6 +258,8 @@ function App() {
     }
   }
 
+
+
   function flashErrorOverlay() {
     const overlay = document.querySelector('#erroroverlay');
 
@@ -257,7 +267,7 @@ function App() {
 
     setTimeout(() => {
       overlay.style.display = 'none';
-    }, 1000);
+    }, 1300);
   }
 
   function shareMessage() {
@@ -273,13 +283,31 @@ function App() {
     const daysPassed = Math.floor(timeDifference / (24 * 60 * 60 * 1000)) + 1;
 
     var [row, column] = currentBox.split('-').slice(1).map(Number);
-    var messageTitle = `MasterWordle\nDay ${daysPassed}, ${row}/6\n`;
+    var currentRow = row
+    if (won == false) {
+      currentRow = '-';
+    }
+    var messageTitle = `MasterWordle\nDay ${daysPassed}, ${currentRow}/${noRows}\n`;
     var finalMessage = messageTitle;
     for (var i = 0; i < row; i++) {
-      finalMessage = finalMessage + `\n ${greenresults[i]}🟢 ${yellowresults[i]}🟡`
+      finalMessage = finalMessage + `\n ${greenresults[i]}🟢 ${yellowresults[i]}🟡`;
     }
     message = finalMessage;
     return finalMessage;
+  }
+
+  function shareTitle() {
+    if (won == false) {
+      return "Not Quite!"
+    }
+    return "Congratulations!";
+  }
+
+  function shareSubtitle() {
+    if (won == false) {
+      return `The word today was '${findWordForCurrentDate()}'.`;
+    }
+    return "You completed the MasterWordle for today.";
   }
 
 
@@ -289,7 +317,8 @@ function App() {
         <Header />
       </div>
       <div className="app-module" role="group">
-        <WinnerPopup hideOverlay={hideOverlay} getMessage={shareMessage} />
+        <WinnerPopup hideOverlay={hideOverlay} getMessage={shareMessage}/>
+        <WelcomePopup hideOverlay={hideOverlay} />
         <ErrorPopup />
         <Board currentBox={currentBox} />
         <Keyboard handleKeyPress={handleKeyPress} />
