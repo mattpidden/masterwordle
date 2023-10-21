@@ -1,12 +1,9 @@
 import React from 'react';
 import './Board.css'
 import ReviewCircles from './ReviewCircles';
-import Keyboard from './keyboard.js';
 
 
 function Board({ currentBox }) {
-
-
   return (
     <div className="board-container">
       <div className="board">
@@ -51,6 +48,20 @@ function Board({ currentBox }) {
           <div className="box" id="box-6-3"></div>
           <div className="box" id="box-6-4"></div>
           <div className="reviewCircles6"><ReviewCircles /></div>
+        </div>
+        <div className="row" id="row-7">
+          <div className="box" id="box-7-1"></div>
+          <div className="box" id="box-7-2"></div>
+          <div className="box" id="box-7-3"></div>
+          <div className="box" id="box-7-4"></div>
+          <div className="reviewCircles7"><ReviewCircles /></div>
+        </div>
+        <div className="row" id="row-8">
+          <div className="box" id="box-8-1"></div>
+          <div className="box" id="box-8-2"></div>
+          <div className="box" id="box-8-3"></div>
+          <div className="box" id="box-8-4"></div>
+          <div className="reviewCircles8"><ReviewCircles /></div>
         </div>
       </div>
     </div>

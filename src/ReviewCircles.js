@@ -30,11 +30,10 @@ export function updateTopRow(topRowCircles, number) {
   topRowCircles.forEach((circle, index) => {
     
     if (index < number) {
-      // Set the background color to yellow and make the circle visible
-      circle.style.visibility = 'visible';
+      // Set the background color to yellow 
+      circle.style.backgroundColor = "yellow";
     } else {
-      // Set the circle as invisible
-      circle.style.visibility = 'hidden';
+      // Leave the circle as just a border
     }
   });
 }
@@ -45,11 +44,10 @@ export function updateBottomRow(bottomRowCircles, number) {
   // Loop through each circle in the top row
   bottomRowCircles.forEach((circle, index) => {
     if (index < number) {
-      // Set the background color to yellow and make the circle visible
-      circle.style.visibility = 'visible';
+      // Set the background color to green 
+      circle.style.backgroundColor = 'green';
     } else {
-      // Set the circle as invisible
-      circle.style.visibility = 'hidden';
+      // Leave the circle as it is
     }
   });
 }

@@ -3,19 +3,21 @@
   height: 10px;
   border: 1px solid black;
   border-radius: 50%;
-  visibility: hidden;
+  visibility: visible;
+  margin: 2px;
 }
 
 .row {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px; /* Adjust as needed */
+  margin-bottom: 0px; /* Adjust as needed */
 }
-
+/*
 .topRow {
-  background-color: rgb(236, 236, 64); /* Change color as needed */
+  background-color: rgb(236, 236, 64); 
 }
 
 .bottomRow {
-  background-color: rgb(67, 151, 67); /* Change color as needed */
+  background-color: rgb(67, 151, 67);
 }
+*/
