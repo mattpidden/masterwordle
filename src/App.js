@@ -287,12 +287,11 @@ function App() {
     if (won == false) {
       currentRow = '-';
     }
-    var messageTitle = `MasterWordle\nDay ${daysPassed}, ${currentRow}/${noRows}\n`;
-    var finalMessage = messageTitle;
+    var finalMessage = `MasterWordle\nDay ${daysPassed}, ${currentRow}/${noRows}\n`;
     for (var i = 0; i < row; i++) {
       finalMessage = finalMessage + `\n ${greenresults[i]}🟢 ${yellowresults[i]}🟡`;
     }
-    message = finalMessage;
+    finalMessage = finalMessage + '\nt.ly/7e3yG';
     return finalMessage;
   }
 
