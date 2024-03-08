@@ -4,12 +4,20 @@ import ReviewCircles from './ReviewCircles';
 
 
 function Board({ currentBox }) {
+
+  const handleBoxTap = (boxid) => {
+    const box = document.getElementById(boxid);
+    if (box) {
+      box.style.backgroundColor = 'rgb(230, 230, 230)';
+    }
+  }
+
   return (
     <div className="board-container">
       <div className="board">
         <div className="row" id="row-1">
-          <div className="box" id="box-1-1"></div>
-          <div className="box" id="box-1-2"></div>
+          <div className="box" id="box-1-1" onClick={handleBoxTap("box-1-1")}></div>
+          <div className="box" id="box-1-2" onClickCapture={console.log("clicked")}></div>
           <div className="box" id="box-1-3"></div>
           <div className="box" id="box-1-4"></div>
           <div className="reviewCircles1"><ReviewCircles /></div>
