@@ -24,6 +24,7 @@ class _MasterWordlePageState extends State<MasterWordlePage> {
   Widget build(BuildContext context) {
     return Consumer<MasterWordleModel>(
         builder: (context, masterWordleModel, child) {
+          
       return Stack(
         children: [
           Scaffold(

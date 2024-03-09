@@ -131,10 +131,10 @@ class MasterWordleModel extends ChangeNotifier {
   }
 
   void populateValidWords() async {
-    String data = await rootBundle.loadString('allwords.txt');
+    String data = await rootBundle.loadString('assets/allwords.txt');
     _validWords = data.split('\n');
 
-    String rawJson = await rootBundle.loadString('wordsgenerated.json');
+    String rawJson = await rootBundle.loadString('assets/wordsgenerated.json');
     Map<String, dynamic> jsonData = jsonDecode(rawJson);
     String formattedMonth = now.month.toString().padLeft(2, '0');
     String formattedDay = now.day.toString().padLeft(2, '0');

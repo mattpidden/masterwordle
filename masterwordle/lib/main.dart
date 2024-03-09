@@ -28,7 +28,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
         useMaterial3: true,
       ),
-      home: const MasterWordlePage(),
+      home: const Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: SafeArea(child: MasterWordlePage())),
     );
   }
 }

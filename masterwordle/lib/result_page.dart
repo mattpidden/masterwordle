@@ -15,7 +15,7 @@ class MasterWordleResultsPage extends StatefulWidget {
 class _MasterWordleResultsPageState extends State<MasterWordleResultsPage> {
   String title = "";
   String message = "";
-
+  bool shareLoading = false;
   @override
   void initState() {
     super.initState();
@@ -31,7 +31,9 @@ class _MasterWordleResultsPageState extends State<MasterWordleResultsPage> {
   Widget build(BuildContext context) {
     return Consumer<MasterWordleModel>(
         builder: (context, masterWordleModel, child) {
-      return SafeArea(
+      return Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: SafeArea(
         child: Scaffold(
           appBar: AppBar(
               backgroundColor: AppColors.backgroundColor,
@@ -82,12 +84,18 @@ class _MasterWordleResultsPageState extends State<MasterWordleResultsPage> {
                 GestureDetector(
                   onTap: () async {
                     final box = context.findRenderObject() as RenderBox?;
+                    setState(() {
+shareLoading = true;
+                    });
                     await Share.share(
                       masterWordleModel.getShareMessage(),
                       subject: "MasterWordle",
                       sharePositionOrigin:
                           box!.localToGlobal(Offset.zero) & box.size,
                     );
+                    setState(() {
+                      shareLoading = false;
+                    });
                   },
                   child: Container(
                     padding: const EdgeInsets.all(12),
@@ -95,7 +103,7 @@ class _MasterWordleResultsPageState extends State<MasterWordleResultsPage> {
                       color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: Text(
+                    child: shareLoading ? CircularProgressIndicator(color: AppColors.whiteColor) : Text(
                       "Share Result",
                       style: const TextStyle(
                           color: AppColors.whiteColor,
@@ -109,6 +117,7 @@ class _MasterWordleResultsPageState extends State<MasterWordleResultsPage> {
             ),
           ),
         ),
+        )
       );
     });
   }

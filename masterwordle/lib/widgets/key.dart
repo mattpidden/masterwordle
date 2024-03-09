@@ -56,7 +56,7 @@ class _KeyWidgetState extends State<KeyWidget> {
             }
           },
           child: Container(
-            height: 40,
+            height: 50,
             width: (widget.letter == "delete" || widget.letter == "enter")
                 ? 80
                 : 50,
