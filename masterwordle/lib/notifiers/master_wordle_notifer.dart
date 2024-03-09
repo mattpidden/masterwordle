@@ -12,8 +12,8 @@ class MasterWordleModel extends ChangeNotifier {
 
   bool _showInvalidWord = false;
 
-  final List<String> _attemptedWords = ["", "", "", "", "", "", "", ""];
-  final List<List<int>> _scores = [
+  List<String> _attemptedWords = ["", "", "", "", "", "", "", ""];
+  List<List<int>> _scores = [
     [-1, -1],
     [-1, -1],
     [-1, -1],
@@ -39,6 +39,30 @@ class MasterWordleModel extends ChangeNotifier {
   bool get complete => _complete;
   bool get won => _won;
   List<List<int>> get scores => _scores;
+
+  void resetPage() {
+    now = DateTime.now();
+    _showInvalidWord = false;
+    _attemptedWords = ["", "", "", "", "", "", "", ""];
+    _scores = [
+      [-1, -1],
+      [-1, -1],
+      [-1, -1],
+      [-1, -1],
+      [-1, -1],
+      [-1, -1],
+      [-1, -1],
+      [-1, -1]
+    ];
+    _validWords = [];
+    _currentWord = 0;
+    _currentLetter = 0;
+    _answer = "";
+    _complete = false;
+    _won = false;
+    populateValidWords();
+    notifyListeners();
+  }
 
   String boardSquareLetter(int row, column) {
     final word = _attemptedWords[row];
