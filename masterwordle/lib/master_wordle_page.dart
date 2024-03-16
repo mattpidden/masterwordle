@@ -23,8 +23,7 @@ class _MasterWordlePageState extends State<MasterWordlePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MasterWordleModel>(
-        builder: (context, masterWordleModel, child) {
+    return Consumer<MasterWordleModel>(builder: (context, masterWordleModel, child) {
       return Stack(
         children: [
           Scaffold(
@@ -35,23 +34,12 @@ class _MasterWordlePageState extends State<MasterWordlePage> {
               title: Title(
                   color: AppColors.backgroundColor,
                   child: const Text(
-                    "MasterWordle",
+                    "MastterWordle",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: AppColors.blackColor,
-                        fontWeight: FontWeight.w900),
+                    style: TextStyle(color: AppColors.blackColor, fontWeight: FontWeight.w900),
                   )),
               actions: [
-                GestureDetector(
-                  onTap: () {
-                    masterWordleModel.resetPage();
-                  },
-                  child: Icon(
-                    Icons.refresh_outlined,
-                    color: AppColors.blackColor,
-                  ),
-                ),
-                SizedBox(
+                const SizedBox(
                   width: 6,
                 ),
                 GestureDetector(
@@ -60,38 +48,42 @@ class _MasterWordlePageState extends State<MasterWordlePage> {
                         context,
                         "Instructions",
                         """Enter a 4 letter word.
+
 A yellow circle means you have a correct letter in the wrong spot.
+
 A green circle means you have a correct letter in the correct spot.
+
 If no circles appear, you have no correct letters at all.
+
 Use this feedback to narrow your guesses and get todays word in 8 goes or less.""",
                         AlertType.neutral);
                   },
-                  child: Icon(
+                  child: const Icon(
                     Icons.info_outline,
                     color: AppColors.blackColor,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 )
               ],
             ),
             body: Center(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     // The board
                     Expanded(
                       child: ListView(
-                        children: [
+                        children: const [
                           MasterWordleBoard(),
                         ],
                       ),
                     ),
                     // Keyboard
-                    KeyboardWidget()
+                    const KeyboardWidget()
                   ],
                 ),
               ),

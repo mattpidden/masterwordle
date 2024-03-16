@@ -70,7 +70,7 @@ class _CustomAlertState extends State<CustomAlert> {
                 Text(
                   widget.title,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8.0),
                 Flexible(
@@ -85,35 +85,32 @@ class _CustomAlertState extends State<CustomAlert> {
                   children: [
                     (widget.actionButtonText != null)
                         ? Expanded(
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                Flexible(
-                                  flex: 2,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(widget.buttonText),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      if (widget.actionButton != null) {
-                                        widget.actionButton!();
-                                      }
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(widget.actionButtonText!),
-                                  ),
-                                ),
-                              ]))
+                            child: Row(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
+                            Flexible(
+                              flex: 2,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(widget.buttonText),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (widget.actionButton != null) {
+                                    widget.actionButton!();
+                                  }
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(widget.actionButtonText!),
+                              ),
+                            ),
+                          ]))
                         : TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
@@ -138,10 +135,7 @@ class WarningAlert extends CustomAlert {
     super.key,
     required super.title,
     required super.message,
-  }) : super(
-            buttonText: 'Understood',
-            alertColor: AppColors.warningColor,
-            icon: Icons.report);
+  }) : super(buttonText: 'Understood', alertColor: AppColors.warningColor, icon: Icons.report);
 }
 
 class ErrorAlert extends CustomAlert {
@@ -149,10 +143,7 @@ class ErrorAlert extends CustomAlert {
     super.key,
     required super.title,
     required super.message,
-  }) : super(
-            buttonText: 'Understood',
-            alertColor: AppColors.errorColor,
-            icon: Icons.error);
+  }) : super(buttonText: 'Understood', alertColor: AppColors.errorColor, icon: Icons.error);
 }
 
 class SuccessAlert extends CustomAlert {
@@ -160,10 +151,7 @@ class SuccessAlert extends CustomAlert {
     super.key,
     required super.title,
     required super.message,
-  }) : super(
-            buttonText: 'Great',
-            alertColor: AppColors.successColor,
-            icon: Icons.check_circle);
+  }) : super(buttonText: 'Great', alertColor: AppColors.successColor, icon: Icons.check_circle);
 }
 
 class NeutralAlert extends CustomAlert {
@@ -171,10 +159,7 @@ class NeutralAlert extends CustomAlert {
     super.key,
     required super.title,
     required super.message,
-  }) : super(
-            buttonText: 'Done',
-            alertColor: AppColors.primaryColor,
-            icon: Icons.info);
+  }) : super(buttonText: 'Done', alertColor: AppColors.primaryColor, icon: Icons.info);
 }
 
 class ActionAlert extends CustomAlert {
@@ -185,8 +170,5 @@ class ActionAlert extends CustomAlert {
       required super.actionButtonText,
       required super.actionButton,
       super.actionButtonColour = AppColors.primaryColor})
-      : super(
-            buttonText: 'Cancel',
-            alertColor: AppColors.primaryColor,
-            icon: Icons.priority_high);
+      : super(buttonText: 'Cancel', alertColor: AppColors.primaryColor, icon: Icons.priority_high);
 }

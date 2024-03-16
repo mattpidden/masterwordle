@@ -8,35 +8,34 @@ class MasterWordleBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         child: Column(
           children: List.generate(
             8,
             (row) => Padding(
               padding: const EdgeInsets.only(bottom: 5),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 MasterWordleClue(
                   row: row,
                   greenClue: false,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 MasterWordleBoardSquare(row: row, column: 0),
-                SizedBox(
+                const SizedBox(
                   width: 3,
                 ),
                 MasterWordleBoardSquare(row: row, column: 1),
-                SizedBox(
+                const SizedBox(
                   width: 3,
                 ),
                 MasterWordleBoardSquare(row: row, column: 2),
-                SizedBox(
+                const SizedBox(
                   width: 3,
                 ),
                 MasterWordleBoardSquare(row: row, column: 3),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 MasterWordleClue(

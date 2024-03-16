@@ -6,34 +6,36 @@ import 'package:provider/provider.dart';
 class MasterWordleBoardSquare extends StatelessWidget {
   final int row;
   final int column;
-  const MasterWordleBoardSquare(
-      {super.key, required this.row, required this.column});
+  const MasterWordleBoardSquare({super.key, required this.row, required this.column});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MasterWordleModel>(
-        builder: (context, masterWordleModel, child) {
-      bool currentSquare = (masterWordleModel.currentWord == row &&
-          masterWordleModel.currentLetter == column);
-      bool lastSquare = (masterWordleModel.currentWord == row &&
-          masterWordleModel.currentLetter - 1 == column);
+    return Consumer<MasterWordleModel>(builder: (context, masterWordleModel, child) {
+      bool currentSquare = (masterWordleModel.currentWord == row && masterWordleModel.currentLetter == column);
+      String letter = masterWordleModel.boardSquareLetter(row, column).toUpperCase();
+      bool empty = letter.isEmpty;
+      bool rowComplete = masterWordleModel.rowComplete(row);
       return Container(
         height: 55,
         width: 55,
         decoration: BoxDecoration(
           color: currentSquare
               ? AppColors.primaryColor.withAlpha(50)
-              : AppColors.backgroundColor,
+              : rowComplete
+                  ? AppColors.backgroundColor
+                  : AppColors.whiteColor,
           border: Border.all(
-            color: (currentSquare || lastSquare)
+            color: currentSquare
                 ? AppColors.primaryColor
-                : AppColors.blackColor,
-            width: 1.0,
+                : (!empty && !rowComplete)
+                    ? AppColors.greyColor
+                    : AppColors.lightGreyColor,
+            width: 2.0,
           ),
         ),
         child: Center(
           child: Text(
-            masterWordleModel.boardSquareLetter(row, column).toUpperCase(),
+            letter,
             style: const TextStyle(
               color: AppColors.blackColor,
               fontWeight: FontWeight.bold,
