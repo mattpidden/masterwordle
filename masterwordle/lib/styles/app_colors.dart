@@ -9,7 +9,9 @@ class AppColors {
 
   // Basic Colours
   static const whiteColor = Color.fromARGB(255, 250, 247, 244);
-  static const greyColor = Color.fromARGB(255, 114, 105, 91);
+  static const lightGreyColor = Color.fromARGB(255, 199, 192, 181);
+  static const greyColor = Color.fromARGB(255, 151, 144, 132);
+  static const darkGreyColor = Color.fromARGB(255, 110, 106, 97);
   static const blackColor = Color.fromARGB(255, 14, 11, 8);
 
   // Status Colours

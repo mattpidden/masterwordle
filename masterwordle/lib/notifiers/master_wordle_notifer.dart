@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:masterwordle/widgets/alerts/show_alerts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MasterWordleModel extends ChangeNotifier {
-  DateTime now = DateTime.now();
+  MasterWordleModel() {
+    getData();
+  }
 
+  DateTime now = DateTime.now();
   final wordMaxLength = 4;
   final maxAttempts = 8;
 
@@ -39,6 +43,7 @@ class MasterWordleModel extends ChangeNotifier {
   bool get complete => _complete;
   bool get won => _won;
   List<List<int>> get scores => _scores;
+  DateTime get date => now;
 
   void resetPage() {
     now = DateTime.now();
@@ -61,6 +66,7 @@ class MasterWordleModel extends ChangeNotifier {
     _complete = false;
     _won = false;
     populateValidWords();
+    getData();
     notifyListeners();
   }
 
@@ -70,12 +76,28 @@ class MasterWordleModel extends ChangeNotifier {
     return letter;
   }
 
+  bool rowComplete(int row) {
+    int currentWord = (_currentWord < maxAttempts) ? _currentWord : maxAttempts;
+    return (row < currentWord);
+  }
+
+  bool letterUsed(String letter) {
+    int currentWord = (_currentWord < maxAttempts) ? _currentWord : maxAttempts;
+    for (var index = 0; index < currentWord; index++) {
+      if (_attemptedWords[index].contains(letter)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   void letterTyped(String letter) {
     if (_attemptedWords[currentWord].length >= wordMaxLength) {
       return;
     } else {
       _attemptedWords[currentWord] = "${_attemptedWords[currentWord]}$letter";
       _currentLetter = _currentLetter + 1;
+      saveData();
       notifyListeners();
     }
   }
@@ -88,7 +110,7 @@ class MasterWordleModel extends ChangeNotifier {
         // Checks if correct guess
         if (_attemptedWords[currentWord] == _answer) {
           scoreWord(_attemptedWords[currentWord]);
-          _currentWord = 100;
+          _currentWord = _currentWord + 1;
           _currentLetter = 100;
           _complete = true;
           _won = true;
@@ -114,6 +136,7 @@ class MasterWordleModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+    saveData();
     return _complete;
   }
 
@@ -121,10 +144,10 @@ class MasterWordleModel extends ChangeNotifier {
     if (_attemptedWords[currentWord] == "") {
       return;
     } else {
-      _attemptedWords[currentWord] = _attemptedWords[currentWord]
-          .substring(0, _attemptedWords[currentWord].length - 1);
+      _attemptedWords[currentWord] = _attemptedWords[currentWord].substring(0, _attemptedWords[currentWord].length - 1);
       _currentLetter = _currentLetter - 1;
       notifyListeners();
+      saveData();
     }
   }
 
@@ -145,13 +168,13 @@ class MasterWordleModel extends ChangeNotifier {
     }
 
     for (int i = 0; i < wordMaxLength; i++) {
-      if (_answer.contains(word[i]) &&
-          !usedIndices.contains(_answer.indexOf(word[i]))) {
+      if (_answer.contains(word[i]) && !usedIndices.contains(_answer.indexOf(word[i]))) {
         yellowScore++;
         usedIndices.add(_answer.indexOf(word[i]));
       }
     }
     _scores[currentWord] = [yellowScore, greenScore];
+    saveData();
   }
 
   void populateValidWords() async {
@@ -174,23 +197,30 @@ class MasterWordleModel extends ChangeNotifier {
 
   (String, String, AlertType) getAlertData() {
     String extra = "";
-    if (now.year == 2024 && now.month == 3 && now.day == 10) {
-      extra =
-          "Todays word is dedicated to the Best Mum Ever. Happy Mothers Day Mum!";
+    if (now.month == 3 && now.day == 20) {
+      extra = "Happy Birthday to the coolest app developer.";
+    } else if (now.month == 3 && now.day == 29) {
+      extra = "Happy Birthday to Tom!";
+    } else if (now.month == 5 && now.day == 7) {
+      extra = "Happy Birthday to Dad!";
+    } else if (now.month == 5 && now.day == 14) {
+      extra = "Happy Birthday to Sela!";
+    } else if (now.month == 6 && now.day == 5) {
+      extra = "Happy Birthday to MastterGame's most frequent user!";
+    } else if (now.month == 11 && now.day == 11) {
+      extra = "Happy Birthday to Ollie!";
+    } else if (now.month == 12 && now.day == 25) {
+      extra = "Merry Christmas Everyone!";
+    } else if (now.month == 12 && now.day == 31) {
+      extra = "Happy New Year's Eve!";
+    } else if (now.month == 1 && now.day == 1) {
+      extra = "Happy New Years!";
     }
 
     if (_won) {
-      return (
-        "Congratulations",
-        "You have completed the MasterWordle for today. Share your result with your friends. $extra",
-        AlertType.success
-      );
+      return ("Congratulations", "You have completed the MasterWordle for today. Share your result with your friends. $extra", AlertType.success);
     } else {
-      return (
-        "Bad Luck",
-        "You ran out of guesses. The word today was '$_answer'. $extra",
-        AlertType.error
-      );
+      return ("Bad Luck", "You ran out of guesses. The word today was '$_answer'. $extra", AlertType.error);
     }
   }
 
@@ -216,7 +246,50 @@ class MasterWordleModel extends ChangeNotifier {
     buffer.writeln('Day $dayNumber, ${_won ? attempts : '-'}/8');
     buffer.writeln();
     buffer.writeln(tableBuffer);
+    buffer.writeln("https://t.ly/b7lCg");
 
     return buffer.toString();
+  }
+
+  Future<void> saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    DateTime now = DateTime.now();
+
+    Map<String, dynamic> jsonData = {
+      'date': now.toIso8601String(),
+      'words': _attemptedWords,
+      'scores': scores.map((list) => list.map((e) => e).toList()).toList(),
+      'current_letter': _currentLetter,
+      'current_word': _currentWord,
+      'complete': _complete,
+      'won': _won,
+    };
+
+    String jsonString = json.encode(jsonData);
+    await prefs.setString('masterwordle', jsonString);
+  }
+
+  Future<void> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final savedData = prefs.getString('masterwordle');
+    DateTime now = DateTime.now();
+
+    if (savedData != null) {
+      Map<String, dynamic> jsonData = json.decode(savedData);
+      DateTime savedDate = DateTime.parse(jsonData['date']);
+
+      if (savedDate.year == now.year && savedDate.month == now.month && savedDate.day == now.day) {
+        _attemptedWords = List<String>.from(jsonData['words']);
+        List<dynamic> scoreLists = jsonData['scores'];
+        _scores = scoreLists.map<List<int>>((list) {
+          return List<int>.from(list);
+        }).toList();
+        _currentLetter = jsonData['current_letter'];
+        _currentWord = jsonData['current_word'];
+        _complete = jsonData['complete'];
+        _won = jsonData['won'];
+        notifyListeners();
+      }
+    }
   }
 }

@@ -8,8 +8,8 @@ class KeyboardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Column(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: const Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

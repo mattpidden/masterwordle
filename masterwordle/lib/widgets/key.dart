@@ -17,8 +17,8 @@ class _KeyWidgetState extends State<KeyWidget> {
   Widget build(BuildContext context) {
     bool borderThicker = false;
 
-    return Consumer<MasterWordleModel>(
-        builder: (context, masterWordleModel, child) {
+    return Consumer<MasterWordleModel>(builder: (context, masterWordleModel, child) {
+      bool letterUsed = masterWordleModel.letterUsed(widget.letter);
       return Flexible(
         flex: (widget.letter == "delete" || widget.letter == "enter") ? 2 : 1,
         child: GestureDetector(
@@ -39,10 +39,7 @@ class _KeyWidgetState extends State<KeyWidget> {
               } else if (widget.letter == "enter") {
                 final result = masterWordleModel.handleEnter();
                 if (result) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => MasterWordleResultsPage()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MasterWordleResultsPage()));
                 }
               } else {
                 masterWordleModel.letterTyped(widget.letter);
@@ -50,18 +47,15 @@ class _KeyWidgetState extends State<KeyWidget> {
             } else {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => MasterWordleResultsPage()),
+                MaterialPageRoute(builder: (context) => const MasterWordleResultsPage()),
               );
             }
           },
           child: Container(
             height: 50,
-            width: (widget.letter == "delete" || widget.letter == "enter")
-                ? 80
-                : 50,
+            width: (widget.letter == "delete" || widget.letter == "enter") ? 80 : 50,
             decoration: BoxDecoration(
-              color: AppColors.backgroundColor,
+              color: letterUsed ? AppColors.lightGreyColor : AppColors.backgroundColor,
               border: Border.all(
                 color: AppColors.blackColor,
                 width: borderThicker ? 3.0 : 1.0,
@@ -74,10 +68,7 @@ class _KeyWidgetState extends State<KeyWidget> {
                 style: TextStyle(
                   color: AppColors.blackColor,
                   fontWeight: FontWeight.bold,
-                  fontSize:
-                      (widget.letter == "delete" || widget.letter == "enter")
-                          ? 10.0
-                          : 16.0,
+                  fontSize: (widget.letter == "delete" || widget.letter == "enter") ? 10.0 : 16.0,
                 ),
               ),
             ),

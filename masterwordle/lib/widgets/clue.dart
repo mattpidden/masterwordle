@@ -14,42 +14,36 @@ class MasterWordleClue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MasterWordleModel>(
-        builder: (context, masterWordleModel, child) {
+    return Consumer<MasterWordleModel>(builder: (context, masterWordleModel, child) {
       final score = masterWordleModel.scores[row];
       final cluesActive = greenClue ? score[1] : score[0];
       bool topLeftActive = cluesActive >= 1 ? true : false;
       bool bottomLeftActive = cluesActive >= 2 ? true : false;
       bool topRightActive = cluesActive >= 3 ? true : false;
       bool bottomRightActive = cluesActive >= 4 ? true : false;
-      final fillColor =
-          greenClue ? AppColors.successColor : AppColors.warningColor;
+      final fillColor = greenClue ? AppColors.successColor : AppColors.warningColor;
 
       return Row(
         children: [
           Column(
             children: [
-              MasterWordleClueCircle(
-                  fillColor: topLeftActive ? fillColor : Colors.transparent),
-              SizedBox(
+              MasterWordleClueCircle(fillColor: topLeftActive ? fillColor : Colors.transparent),
+              const SizedBox(
                 height: 3,
               ),
-              MasterWordleClueCircle(
-                  fillColor: bottomLeftActive ? fillColor : Colors.transparent)
+              MasterWordleClueCircle(fillColor: bottomLeftActive ? fillColor : Colors.transparent)
             ],
           ),
-          SizedBox(
+          const SizedBox(
             width: 3,
           ),
           Column(
             children: [
-              MasterWordleClueCircle(
-                  fillColor: topRightActive ? fillColor : Colors.transparent),
-              SizedBox(
+              MasterWordleClueCircle(fillColor: topRightActive ? fillColor : Colors.transparent),
+              const SizedBox(
                 height: 3,
               ),
-              MasterWordleClueCircle(
-                  fillColor: bottomRightActive ? fillColor : Colors.transparent)
+              MasterWordleClueCircle(fillColor: bottomRightActive ? fillColor : Colors.transparent)
             ],
           ),
         ],
@@ -64,8 +58,7 @@ class MasterWordleClueCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MasterWordleModel>(
-        builder: (context, masterWordleModel, child) {
+    return Consumer<MasterWordleModel>(builder: (context, masterWordleModel, child) {
       return Container(
         width: 20,
         height: 20,
@@ -73,9 +66,7 @@ class MasterWordleClueCircle extends StatelessWidget {
           shape: BoxShape.circle,
           color: fillColor,
           border: Border.all(
-            color: fillColor == Colors.transparent
-                ? Colors.transparent
-                : AppColors.blackColor,
+            color: fillColor == Colors.transparent ? Colors.transparent : AppColors.blackColor,
             width: 1.0,
           ),
         ),
