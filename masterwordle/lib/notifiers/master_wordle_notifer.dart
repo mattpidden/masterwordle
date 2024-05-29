@@ -265,6 +265,22 @@ class MasterWordleModel extends ChangeNotifier {
       'won': _won,
     };
 
+    int attempts = 0;
+    for (int i = 0; i < scores.length; i++) {
+      List<int> score = scores[i];
+      if (score[0] == -1 && score[1] == -1) {
+        break;
+      }
+      attempts++;
+    }
+    List<String> allScores = [];
+    final savedScores = prefs.getStringList('scores');
+    if (savedScores != null) {
+      allScores = savedScores;
+    }
+    //allScores.add(attempts);
+    await prefs.setStringList('scores', allScores);
+
     String jsonString = json.encode(jsonData);
     await prefs.setString('masterwordle', jsonString);
   }
