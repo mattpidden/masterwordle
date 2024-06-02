@@ -48,14 +48,14 @@ class _MasterWordlePageState extends State<MasterWordlePage> {
                         context,
                         "Instructions",
                         """Enter a 4 letter word.
-
-A yellow circle means you have a correct letter in the wrong spot.
-
-A green circle means you have a correct letter in the correct spot.
-
-If no circles appear, you have no correct letters at all.
-
-Use this feedback to narrow your guesses and get todays word in 8 goes or less.""",
+          
+          A yellow circle means you have a correct letter in the wrong spot.
+          
+          A green circle means you have a correct letter in the correct spot.
+          
+          If no circles appear, you have no correct letters at all.
+          
+          Use this feedback to narrow your guesses and get todays word in 8 goes or less.""",
                         AlertType.neutral);
                   },
                   child: const Icon(
@@ -68,30 +68,37 @@ Use this feedback to narrow your guesses and get todays word in 8 goes or less."
                 )
               ],
             ),
-            body: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // The board
-                    Expanded(
-                      child: ListView(
-                        children: const [
-                          MasterWordleBoard(),
-                        ],
+            body: SafeArea(
+              child: Center(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // The board
+                      Expanded(
+                        child: ListView(
+                          children: const [
+                            MasterWordleBoard(),
+                          ],
+                        ),
                       ),
-                    ),
-                    // Keyboard
-                    const KeyboardWidget()
-                  ],
+                      // Keyboard
+                      const KeyboardWidget(),
+                      const SizedBox(
+                        height: 25,
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          SmallDropdownAlert(
-            message: "INVALID WORD",
-            hidden: !masterWordleModel.showInvalidWord,
+          SafeArea(
+            child: SmallDropdownAlert(
+              message: "INVALID WORD",
+              hidden: !masterWordleModel.showInvalidWord,
+            ),
           )
         ],
       );

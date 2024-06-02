@@ -80,7 +80,7 @@ class _OverviewPageState extends State<OverviewPage> {
                                     masterWordleModel.resetPage();
                                     Navigator.push(context, MaterialPageRoute(builder: (context) => const MasterWordlePage()));
                                   },
-                                  style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(AppColors.whiteColor)),
+                                  style: const ButtonStyle(backgroundColor: WidgetStatePropertyAll(AppColors.whiteColor)),
                                   child: const Text("PLAY"))
                             ],
                           )

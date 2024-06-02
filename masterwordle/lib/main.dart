@@ -4,7 +4,9 @@ import 'package:masterwordle/overview_page.dart';
 import 'package:masterwordle/styles/app_colors.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MultiProvider(
       providers: [
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
         useMaterial3: true,
       ),
-      home: const Scaffold(backgroundColor: AppColors.backgroundColor, body: SafeArea(child: OverviewPage())),
+      home: const Scaffold(backgroundColor: AppColors.backgroundColor, body: OverviewPage()),
     );
   }
 }
