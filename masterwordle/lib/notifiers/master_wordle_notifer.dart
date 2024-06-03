@@ -114,6 +114,7 @@ class MasterWordleModel extends ChangeNotifier {
           _currentLetter = 100;
           _complete = true;
           _won = true;
+          handleSaveStats();
           notifyListeners();
           // Checks if valid word
         } else if (checkValidWord(_attemptedWords[currentWord])) {
@@ -159,22 +160,37 @@ class MasterWordleModel extends ChangeNotifier {
     int greenScore = 0;
     int yellowScore = 0;
     Set<int> usedIndices = {};
+    Set<int> resultIndices = {};
 
     for (int i = 0; i < wordMaxLength; i++) {
       if (word[i] == _answer[i]) {
         greenScore++;
         usedIndices.add(i);
+        resultIndices.add(i);
       }
     }
 
     for (int i = 0; i < wordMaxLength; i++) {
-      if (_answer.contains(word[i]) && !usedIndices.contains(_answer.indexOf(word[i]))) {
-        yellowScore++;
-        usedIndices.add(_answer.indexOf(word[i]));
+      if (!resultIndices.contains(i)) {
+        int contains = containsCharExceptAtUsedIndexes(_answer, word[i], usedIndices);
+        if (contains != -1) {
+          yellowScore++;
+          usedIndices.add(contains);
+        }
       }
     }
+
     _scores[currentWord] = [yellowScore, greenScore];
     saveData();
+  }
+
+  int containsCharExceptAtUsedIndexes(String input, String char, Set<int> usedIndexes) {
+    for (int i = 0; i < input.length; i++) {
+      if (input[i] == char && !usedIndexes.contains(i)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   void populateValidWords() async {
@@ -251,6 +267,33 @@ class MasterWordleModel extends ChangeNotifier {
     return buffer.toString();
   }
 
+  Future<void> handleSaveStats() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int attempts = 0;
+    for (int i = 0; i < scores.length; i++) {
+      List<int> score = scores[i];
+      if (score[0] == -1 && score[1] == -1) {
+        break;
+      }
+      attempts++;
+    }
+    final saveId = "masterwordleScores$attempts";
+    int savedScore = prefs.getInt(saveId) ?? 0;
+    savedScore += 1;
+    prefs.setInt(saveId, savedScore);
+  }
+
+  Future<List<int>> getAllStats() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<int> allStats = [];
+    for (int i = 1; i <= maxAttempts; i++) {
+      final saveId = "masterwordleScores$i";
+      int savedScore = prefs.getInt(saveId) ?? 0;
+      allStats.add(savedScore);
+    }
+    return allStats;
+  }
+
   Future<void> saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     DateTime now = DateTime.now();
@@ -265,21 +308,12 @@ class MasterWordleModel extends ChangeNotifier {
       'won': _won,
     };
 
-    int attempts = 0;
     for (int i = 0; i < scores.length; i++) {
       List<int> score = scores[i];
       if (score[0] == -1 && score[1] == -1) {
         break;
       }
-      attempts++;
     }
-    List<String> allScores = [];
-    final savedScores = prefs.getStringList('scores');
-    if (savedScores != null) {
-      allScores = savedScores;
-    }
-    //allScores.add(attempts);
-    await prefs.setStringList('scores', allScores);
 
     String jsonString = json.encode(jsonData);
     await prefs.setString('masterwordle', jsonString);
