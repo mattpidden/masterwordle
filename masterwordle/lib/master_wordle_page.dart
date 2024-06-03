@@ -95,9 +95,11 @@ class _MasterWordlePageState extends State<MasterWordlePage> {
             ),
           ),
           SafeArea(
-            child: SmallDropdownAlert(
-              message: "INVALID WORD",
-              hidden: !masterWordleModel.showInvalidWord,
+            child: IgnorePointer(
+              child: SmallDropdownAlert(
+                message: "INVALID WORD",
+                hidden: !masterWordleModel.showInvalidWord,
+              ),
             ),
           )
         ],
